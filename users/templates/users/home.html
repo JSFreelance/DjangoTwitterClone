@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% load bootstrap %}
+
+{% block title %} Login {% endblock %}
+
+{% block section %}
+
+    <h2>Home page</h2>
+
+    {% if user.is_authenticated %}
+        {% for error in errors %}
+            <p>{{ error }}</p>
+
+        {% endfor %}
+
+        <form method="post">
+            {% csrf_token %}
+            {{ tweet_form|bootstrap }}
+        </form>
+
+        <div class="user-profile-wrapper">
+            <ul class="list-group profile-data">
+                <li class="list-group-item">Name: <b>{{ user }}</b></li>
+                <li class="list-group-item">Nick: @{{ user.userprofile.user_nick }}</li>
+                <li class="list-group-item">Description: {{ user.userprofile.description }}</li>
+                <li class="list-group-item">Localization: {{ user.userprofile.localization }}</li>
+                <li class="list-group-item">Joined at: {{ user.userprofile.join_date|date:"d-m-Y" }}</li>
+            </ul>
+            {% if tweets.count == 0 %}
+                <p>No tweets to show</p>
+            {% endif %}
+            <ul class="list-group profile-data">
+                {% for tweet in tweets %}
+                    <li class="list-group-item">{{ tweet.text }}</li>
+                {% endfor %}
+            </ul>
+            <br>
+            {% if tweets.has_other_pages %}
+                <ul class="pagination">
+                    {% if tweets.has_previous %}
+                        <li><a href="?page={{ tweets.previous_page_number }}">&laquo;</a></li>
+                    {% else %}
+                        <li class="disabled"><span>&laquo;</span></li>
+                    {% endif %}
+                    {% for i in tweets.paginator.page_range %}
+                        {% if tweets.number == i %}
+                            <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+                        {% else %}
+                            <li><a href="?page={{ i }}">{{ i }}</a></li>
+                        {% endif %}
+                    {% endfor %}
+                    {% if tweets.has_next %}
+                        <li><a href="?page={{ tweets.next_page_number }}">&raquo;</a></li>
+                    {% else %}
+                        <li class="disabled"><span>&raquo;</span></li>
+                    {% endif %}
+                </ul>
+            {% endif %}
+        </div>
+
+    {% else %}
+        <h2>Welcome to twitter clone</h2>
+        <h3>Open a new account its amazing!</h3>
+    {% endif %}
+{% endblock %}

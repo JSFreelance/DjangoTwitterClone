@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load bootstrap %}
+
+{% block title %} Create User {% endblock %}
+
+{% block section %}
+
+<form method="post">
+    {% csrf_token %}
+    {{ user_signup_form|bootstrap }}
+    {{ user_profile_signup_form|bootstrap }}
+    <button class="btn btn-primary">Create user</button>
+
+</form>
+
+{% endblock %}
