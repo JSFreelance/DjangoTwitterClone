@@ -17,6 +17,7 @@ tests/.coverage
 build/
 tests/report/
 
+
 # bower components folder
 bower_components
 
@@ -28,3 +29,5 @@ db.sqlite3
 
 # venv folder
 venv
+
+#Legac
