@@ -30,4 +30,6 @@ db.sqlite3
 # venv folder
 venv
 
-#Legac
+# Legacy folders
+
+users/static
